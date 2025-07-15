@@ -1,20 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
-<<<<<<< HEAD
-=======
-import { Start } from './pages/Start';
->>>>>>> origin/scan
-import { Scan } from './pages/Scan';
+import { Text } from './pages/Text';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-<<<<<<< HEAD
-=======
-        <Route path='/' element={<Start />} />
->>>>>>> origin/scan
-        <Route path='/scan' element={<Scan />} />
+        <Route path='/scan' element={<Text />} />
       </Routes>
     </BrowserRouter>
   );
