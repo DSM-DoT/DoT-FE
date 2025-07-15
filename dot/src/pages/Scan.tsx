@@ -172,7 +172,6 @@ const Inputdescription = styled.h2`
 const TextInputField = styled.textarea`
   width: 669px;
   height: 155px;
-  font-family: "Pretendard Variable";
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
