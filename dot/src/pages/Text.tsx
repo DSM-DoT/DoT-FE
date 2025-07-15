@@ -33,7 +33,6 @@ const brailleMap = {
 export const Text = () => {
   const [text, setText] = useState("");
   const [braille, setBraille] = useState("");
-  const [error, setError] = useState(0);
   const navigate = useNavigate();
 
 // 점자 변환 함수
@@ -58,6 +57,8 @@ useEffect(() => {
   setBraille(brailleStr);
   setError(hasError ? 1 : 0);
 }, [text]);
+
+const [error, setError] = useState(0);
 
 // text가 바뀔 때마다 braille 자동 세팅
 
