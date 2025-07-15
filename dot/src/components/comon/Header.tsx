@@ -20,18 +20,24 @@ export const Header = () => {
 }
 
 const HeaderWrapper = styled.div`
+  top: 0;
+  left: 0;
+  margin: 0;
+  position: fixed;
   width: 100%;
   height: 60px;
+  background-color: #ffffff;
   border-bottom: 1px solid #888888;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 10;
   padding: 0 58px;
 `
 
 const MenuWapper = styled.div`
   display: flex;
-  gap: 11px;
+  gap: 20px;
   font-size: 18px;
   color: #6D6D6D;
 `

@@ -22,7 +22,7 @@ export const Start = () => {
             <Text><Highlight>텍스트를</Highlight> 점자로</Text>
             <Text>점자를 <Highlight>시각화로</Highlight> </Text>
           </TextWrapper>
-          <Button text="지금 점자 스캔하기" onClick={GoToScan}/>
+          <Button text="지금 글자 스캔하기" onClick={GoToScan}/>
         </StartContent>
       </StartWrapper>
     </Wrapper>
