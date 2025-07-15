@@ -6,7 +6,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/scan' element={<Text />} />
+        <Route path='/text' element={<Text />} />
       </Routes>
     </BrowserRouter>
   );
