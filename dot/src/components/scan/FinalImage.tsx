@@ -7,31 +7,23 @@ import { useEffect, useState } from "react";
 import { Title } from "../comon/Title";
 
 const brailleMap = {
-  // 소문자 a~z
   a: '\u2801', b: '\u2803', c: '\u2809', d: '\u2819', e: '\u2811',
   f: '\u280B', g: '\u281B', h: '\u2813', i: '\u280A', j: '\u281A',
   k: '\u2805', l: '\u2807', m: '\u280D', n: '\u281D', o: '\u2815',
   p: '\u280F', q: '\u281F', r: '\u2817', s: '\u280E', t: '\u281E',
   u: '\u2825', v: '\u2827', w: '\u283A', x: '\u282D', y: '\u283D', z: '\u2835',
-
-  // 숫자 0~9
   1: '\u2801', 2: '\u2803', 3: '\u2809', 4: '\u2819', 5: '\u2811',
   6: '\u280B', 7: '\u281B', 8: '\u2813', 9: '\u280A', 0: '\u281A',
-
-  // 문장 부호
-  ' ': '\u2800',   // 공백
-  '.': '\u2832',   // 온점 ⠲
-  ',': '\u2802',   // 쉼표 ⠂
-  '!': '\u2816',   // 느낌표 ⠖
-  '?': '\u2826'    // 물음표 ⠦
+  ' ': '\u2800', '.': '\u2832', ',': '\u2802', '!': '\u2816', '?': '\u2826'
 };
 
 type FinalComponentProps = {
   image: string;
   onReset: () => void;
+  textLoad: string;
 };
 
-export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset }) => {
+export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset, textLoad }) => {
   const [text, setText] = useState("");
   const [braille, setBraille] = useState("");
 
@@ -43,10 +35,9 @@ export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset }) =>
   };
 
   useEffect(() => {
-    const sampleText = "i like apple man!";
-    setText(sampleText);
-    setBraille(convertToBraille(sampleText));
-  }, []);
+    setText(textLoad);
+    setBraille(convertToBraille(textLoad));
+  }, [textLoad]);
 
   const handleSpeakText = () => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -66,17 +57,17 @@ export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset }) =>
         </TitleWrapper>
 
         <TextContentWrapper>
-          {/* 일반 텍스트 출력 */}
           <TextContent>
             <ContentWrapper>
               <TitleContent>
                 <TitleText>
-                  이미지를 스캔한 결과 <img src={sound} style={{cursor: 'pointer'}} onClick={handleSpeakText}/>
+                  이미지를 스캔한 결과 
+                  <img src={sound} style={{cursor: 'pointer'}} onClick={handleSpeakText}/>
                 </TitleText>
                 <TextBox>{text ? text : `* 인식한 문자가 없습니다. *`}</TextBox>
               </TitleContent>
               <ButtonWrapper>
-                <img src={leftArrow} style={{ cursor: 'pointer' }} onClick={() => onReset()}/>
+                <img src={leftArrow} style={{ cursor: 'pointer' }} onClick={onReset}/>
                 <img src={copy} style={{ cursor: 'pointer' }} onClick={() => navigator.clipboard.writeText(text)}/>
               </ButtonWrapper>
             </ContentWrapper>
@@ -87,7 +78,6 @@ export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset }) =>
             <img src={arrow} style={{ width: '10px', height: '13.33px' }}/>
           </ArrowText>
 
-          {/* 점자 출력 */}
           <TextContent>
             <ContentWrapper>
               <TitleContent>
@@ -95,7 +85,7 @@ export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset }) =>
                 <TextBox>{braille}</TextBox>
               </TitleContent>
               <ButtonWrapper>
-                <img src="" style={{ cursor: 'pointer' }} />
+                <div />
                 <img src={copy} style={{ cursor: 'pointer' }} onClick={() => navigator.clipboard.writeText(braille)}/>
               </ButtonWrapper>
             </ContentWrapper>
@@ -105,6 +95,7 @@ export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset }) =>
     </FinalWrapper>
   );
 };
+
 
 // 스타일 컴포넌트
 const FinalWrapper = styled.div`

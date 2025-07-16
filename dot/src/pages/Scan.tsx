@@ -12,6 +12,8 @@ import { Linked } from "../components/comon/Linked";
 import camera from "../assets/icons/camera.svg";
 import upload from "../assets/icons/upload_img.svg";
 
+const apiKey = import.meta.env.VITE_AI_API_KEY;
+console.log("API 키:", import.meta.env.VITE_AI_API_KEY);
 
 
 export const Scan = () => {
@@ -23,11 +25,11 @@ export const Scan = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [finalImage, setFinalImage] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [ocrText, setOcrText] = useState<string>("");
 
   const [error, setError] = useState(0);
   const navigate = useNavigate();
 
-  // 카메라 스트림 처리
   useEffect(() => {
     if (!showCamera) return;
 
@@ -52,14 +54,12 @@ export const Scan = () => {
     };
   }, [showCamera]);
 
-  // 파일 업로드 클릭 시
   const handleUploadFile = () => {
     setShowCamera(false);
     fileInputRef.current?.click();
     setError(0);
   };
 
-  // 파일 선택 시
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -72,7 +72,6 @@ export const Scan = () => {
     }
   };
 
-  // 스캔하기 눌렀을 때 (캡처 또는 업로드 이미지 finalImage 상태로 전환)
   const handleScan = () => {
     if (showCamera && videoRef.current && canvasRef.current) {
       const video = videoRef.current;
@@ -81,25 +80,60 @@ export const Scan = () => {
       canvas.height = video.videoHeight;
       const ctx = canvas.getContext("2d");
       if (ctx) {
-        // 좌우 반전된 상태로 캡쳐
         ctx.translate(canvas.width, 0);
         ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const imageDataUrl = canvas.toDataURL("image/png");
+        console.log("캡처된 이미지 데이터 URL:", imageDataUrl); // 여기 추가
         setCapturedImage(imageDataUrl);
         setFinalImage(true);
         setShowCamera(false);
+        const base64 = imageDataUrl.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+        runOCR(base64);
       }
     } else if (selectedImage) {
-      // 업로드 이미지가 있을 경우 바로 finalImage 상태로
+      console.log("선택된 업로드 이미지:", selectedImage); // 여기 추가
       setCapturedImage(selectedImage);
       setFinalImage(true);
+      const base64 = selectedImage.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+      runOCR(base64);
     } else {
       setError(2);
     }
   };
 
-  // finalImage 상태면 완전 다른 컴포넌트 보여주기
+  const runOCR = async (base64: string) => {
+    
+    console.log("OCR 요청 전송, base64 길이:", base64.length); // 요청 직전 로그
+
+    try {
+      const response = await fetch(
+        `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            requests: [
+              {
+                image: { content: base64 },
+                features: [{ type: "TEXT_DETECTION" }],
+              },
+            ],
+          }),
+        }
+      );
+
+      const result = await response.json();
+      console.log("OCR 응답 결과:", result); // 응답 확인용 로그
+
+      const text = result.responses?.[0]?.fullTextAnnotation?.text || "";
+      console.log("인식된 텍스트:", text); // 텍스트 유무 체크용
+      setOcrText(text);
+    } catch (err) {
+      console.error("OCR 실패:", err);
+    }
+  };
+
   if (finalImage && capturedImage) {
     return (
       <ScanWrapper>
@@ -107,11 +141,13 @@ export const Scan = () => {
         <ScanbarWrapper>
           <FinalImage
             image={capturedImage}
+            textLoad={ocrText}
             onReset={() => {
               setFinalImage(false);
               setCapturedImage(null);
               setShowCamera(false);
               setSelectedImage(null);
+              setOcrText("");
             }}
           />
         </ScanbarWrapper>
@@ -134,7 +170,7 @@ export const Scan = () => {
               <ContantWrapper>
                 <ImageWapper>
                   <TitleWrapper>
-                    <Error code={error}/>
+                    <Error code={error} />
                     <ImageContainer $code={error}>
                       {showCamera && (
                         <video
@@ -146,7 +182,7 @@ export const Scan = () => {
                             height: "100%",
                             objectFit: "cover",
                             borderRadius: "8px",
-                            transform: "scaleX(-1)", // 좌우 반전
+                            // transform: "scaleX(-1)",
                           }}
                         />
                       )}
@@ -173,7 +209,6 @@ export const Scan = () => {
                       onChange={handleFileChange}
                     />
                   </TitleWrapper>
-                  
 
                   <ButtonWrapper>
                     <img
@@ -197,16 +232,18 @@ export const Scan = () => {
                 <Button text="스캔하기" onClick={handleScan} />
               </ContantWrapper>
             </ScanbarContant>
-            {/* 캔버스는 화면에 보이지 않게 숨겨둠 */}
             <canvas ref={canvasRef} style={{ display: "none" }} />
           </ScanbarGap>
-          <Linked title="텍스트만 변환하고 싶어요" link="바로가기" onClick={() => navigate('/text')} />
+          <Linked
+            title="텍스트만 변환하고 싶어요"
+            link="바로가기"
+            onClick={() => navigate("/text")}
+          />
         </ScanbarContainer>
       </ScanbarWrapper>
     </ScanWrapper>
   );
 };
-
 
 const ScanWrapper = styled.div`
   width: 100%;
@@ -228,7 +265,7 @@ const ScanbarContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 29px;
-  `;
+`;
 
 const ScanbarGap = styled.div`
   display: flex;

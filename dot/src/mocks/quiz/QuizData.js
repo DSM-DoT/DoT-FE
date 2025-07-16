@@ -28,8 +28,8 @@ const brailleQuiz = [
     { question: "점자 블록은 점자 문자와 같은 원리로 만들어졌다.", answer: false },
     { question: "점자를 배울 때 점자 타자기를 사용하기도 한다.", answer: true },
     { question: "컴퓨터 자판으로도 점자를 입력할 수 있다.", answer: true },
-    { question: "세계 점자의 날은 매년 1월 4일이다.", answer: true },
-    { question: "세계 점자의 날은 매년 4월 1일이다.", answer: false }
+    { question: "세계 점자의 날은 매년 1월 4일이다.", answer: false },
+    { question: "세계 점자의 날은 매년 4월 1일이다.", answer: true }
   ];
 
 export default brailleQuiz;
