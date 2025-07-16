@@ -176,7 +176,7 @@ const Result = styled.div<{$error: number}>`
   justify-content: flex-start;
   align-items: flex-start;
   background-color: #F6F6F6;
-  border: ${props => props.$error ? '2px solid #FF3B30' : 'none'};
+  outline: ${props => props.$error ? '2px solid #FF3B30' : 'none'};
 `;
 
 const Inputtext = styled.h1<{$code?: number}>`
