@@ -185,7 +185,7 @@ export const PlayGround: React.FC<PlayGroundProps> = ({
             </QuizExplain>
           </QuizTextWrapper>
           <QuizCardWrapper>
-            <QuizCount>
+            <QuizCount $answer={answer} $quiz={quiz}>
               {answerCount}번째 문제
             </QuizCount>
             <CardWrapper>
