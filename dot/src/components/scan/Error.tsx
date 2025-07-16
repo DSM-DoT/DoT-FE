@@ -24,4 +24,6 @@ const ErrorText = styled.div`
   font-weight: 400;
   font-size: 12px;
   color:#FF3B30;
+  position: absolute;
+  margin-bottom: 230px;
 `

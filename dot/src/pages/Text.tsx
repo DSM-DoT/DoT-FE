@@ -100,11 +100,11 @@ useEffect(() => {
               <TextBox $code={error}>{error === 0 ? braille : "변환는 소문자 영어만 가능 합니다! (특수문자 x)"}</TextBox>
               <ButtonWrapper>
                   <img src="" style={{ cursor: 'pointer' }} />
-                  <img src={error === 0 ? copy : "" } style={{ cursor: 'pointer' }} onClick={() => navigator.clipboard.writeText(braille)}/>
+                  <img src={error === 0 ? copy : "" } style={{ cursor: 'pointer', position: 'absolute', bottom: '45px', right: '40px' }} onClick={() => navigator.clipboard.writeText(braille)}/>
                 </ButtonWrapper>
             </Result>
           </Scandiv>
-          <Linked title="이미지나 스캔할레요" link="바로가기" onClick={() => navigate('/scan')}/>
+          <Linked title="이미지 스캔할래요" link="바로가기" onClick={() => navigate('/scan')}/>
         </ScanWrapper>
       </Main>
     </>
@@ -115,6 +115,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
+  margin-top: 30px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -178,7 +179,7 @@ const Result = styled.div<{$error: number}>`
   justify-content: flex-start;
   align-items: flex-start;
   background-color: #F6F6F6;
-  border: ${props => props.$error ? '2px solid #FF3B30' : 'none'};
+  outline: ${props => props.$error ? '2px solid #FF3B30' : 'none'};
 `;
 
 const Inputtext = styled.h1<{$code?: number}>`
@@ -190,27 +191,6 @@ const Inputtext = styled.h1<{$code?: number}>`
   align-items: center;
   outline: none;
   gap: 5px;
-`;
-
-const Inputdescription = styled.h2`
-  /* Wow sans */
-
-  font-family: "Pretendard Variable";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  /* 상자 높이와 동일 */
-
-  color: #6d6d6d;
-
-  /* 내부 오토레이아웃 */
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
-  margin-top: 5px;
-  margin-left: 15px;
 `;
 
 const TextInputField = styled.textarea`

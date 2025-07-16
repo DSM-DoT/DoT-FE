@@ -255,7 +255,6 @@ const ImageContainer = styled.div<{$code: number}>`
   background-color: #d1d1d1;
   border: ${(props) => (props.$code !== 0 ? "2px solid red" : "none")};
   border-radius: 8px;
-  overflow: hidden;
 `;
 
 const TitleWrapper = styled.div`
