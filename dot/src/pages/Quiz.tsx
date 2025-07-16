@@ -48,8 +48,9 @@ export const Quiz = () => {
             <QuizContainer>
               {finalQuizCount} 문제 중, {finalCount}문제 맞춤.
               <ImageWrapper>
-                <ImageContent src={bg} alt="퀴즈 배경">
-                </ImageContent>
+                <ImageContents>
+                  {Math.round(score)}점
+                </ImageContents>
               </ImageWrapper>
               <ButtonTitleWrapper>
                 문제 수
@@ -155,6 +156,19 @@ const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3px;
+`
+
+const ImageContents = styled.div`
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  background: linear-gradient(137deg, #EAECFE 1.03%, #808DFF 96.14%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #ffffff;
+  font-weight: 700;
 `
 
 const ImageContent = styled.img`

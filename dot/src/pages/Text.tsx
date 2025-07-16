@@ -16,10 +16,6 @@ const brailleMap = {
   p: '\u280F', q: '\u281F', r: '\u2817', s: '\u280E', t: '\u281E',
   u: '\u2825', v: '\u2827', w: '\u283A', x: '\u282D', y: '\u283D', z: '\u2835',
 
-  // 숫자 0~9
-  1: '\u2801', 2: '\u2803', 3: '\u2809', 4: '\u2819', 5: '\u2811',
-  6: '\u280B', 7: '\u281B', 8: '\u2813', 9: '\u280A', 0: '\u281A',
-
   // 문장 부호입니다
   ' ': '\u2800',   // 공백
   '.': '\u2832',   // 온점 ⠲
@@ -33,6 +29,7 @@ const brailleMap = {
 export const Text = () => {
   const [text, setText] = useState("");
   const [braille, setBraille] = useState("");
+  const [error, setError] = useState(0);
   const navigate = useNavigate();
 
 // 점자 변환 함수
@@ -58,7 +55,6 @@ useEffect(() => {
   setError(hasError ? 1 : 0);
 }, [text]);
 
-const [error, setError] = useState(0);
 
 // text가 바뀔 때마다 braille 자동 세팅
 
