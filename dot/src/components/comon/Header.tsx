@@ -14,6 +14,7 @@ export const Header = () => {
       <MenuWrapper>
         <Menu href="/scan">스캔하기</Menu>
         <Menu href="/text">텍스트 변환</Menu>
+        <Menu href="/quiz">퀴즈 풀기</Menu>
       </MenuWrapper>
     </HeaderWrapper>
   );
