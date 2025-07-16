@@ -15,7 +15,10 @@ export const CountButton:React.FC<CountButtonProps> = ({title, nowCount, onClick
 }
 
 const ButtonWrapper = styled.div<{$title: number, $nowCount: number}>`
-  font-size: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
   width: 18px;
   height: 18px;
   border-radius: 60px;

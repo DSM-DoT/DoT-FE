@@ -4,35 +4,72 @@ import { Header } from "../components/comon/Header";
 import { Title } from "../components/comon/Title";
 import bg from "../assets/decorations/quiz_bg.svg";
 import { CountButton } from "../components/quiz/CountButton";
+import { Button } from "../components/comon/Button";
+import { PlayGround } from "../components/quiz/PlayGround";
 
 export const Quiz = () => {
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
 
   const [nowQuiz, setNowQuiz] = useState(0);
   const [quizCount, setQuizCount] = useState(10);
+  const [finalCount, setFinalCount] = useState(0);
+  const [score, setScore] = useState(0);
+  const [finalQuizCount, setFinalQuizCount] = useState(0);
+
+  const getResultText = (score: number): string => {
+    if (score === 100) return "점자 마스터세요??";
+    if (score >= 90) return "진짜 조금만 더하면...";
+    if (score >= 75) return "조금 더 분발하세요.";
+    if (score >= 50) return "다소 분발해야겠어요..";
+    return "분발하셔야겠어요....";
+  };
+
   if(nowQuiz === 1){
     return (
-      <></>
+      <QuizWrapper>
+        <Header/>
+        <QuizSettingWrapper>
+          <PlayGround quizCount={quizCount} isQuiz={setNowQuiz} isAnswerCount={setFinalCount} isScore={setScore} isCount={setFinalQuizCount}/>
+        </QuizSettingWrapper>
+      </QuizWrapper>
     )
 
   }else if (nowQuiz === 2){
     return (
       <QuizWrapper>
         <Header/>
+        <QuizSettingWrapper>
+        <QuizeSettingTitleWrapper>
+          <Title
+            title="퀴즈 결과"
+            text={`결과는... ${getResultText(score)}`}
+          />
+          <QuizSettingBarContainer>
+            <QuizGap>
+            <QuizContainer>
+              {finalQuizCount} 문제 중, {finalCount}문제 맞춤.
+              <ImageWrapper>
+                <ImageContent src={bg} alt="퀴즈 배경">
+                </ImageContent>
+              </ImageWrapper>
+              <ButtonTitleWrapper>
+                문제 수
+                <ButtonWrapper>
+                  <CountButton title={5} nowCount={quizCount} onClick={() => setQuizCount(5)}/>
+                  <CountButton title={10} nowCount={quizCount} onClick={() => setQuizCount(10)}/>
+                  <CountButton title={15} nowCount={quizCount} onClick={() => setQuizCount(15)}/>
+                  <CountButton title={20} nowCount={quizCount} onClick={() => setQuizCount(20)}/>
+                  <CountButton title={30} nowCount={quizCount} onClick={() => setQuizCount(30)}/>
+                </ButtonWrapper>
+              </ButtonTitleWrapper>
+            </QuizContainer>
+            <Button text="다시하기" onClick={() => setNowQuiz(1)}/>
+            </QuizGap>
+          </QuizSettingBarContainer>
+        </QuizeSettingTitleWrapper>
+      </QuizSettingWrapper>
       </QuizWrapper>
     )
   }
-
   return (
     <QuizWrapper>
       <Header/>
@@ -40,18 +77,25 @@ export const Quiz = () => {
         <QuizeSettingTitleWrapper>
           <Title title="퀴즈 풀기" text="점자의 역사와 재미있는 사실들을 관한 퀴즈를 풀어보새요!"/>
           <QuizSettingBarContainer>
-            <ImageWrapper>
-              <ImageContent src={bg} alt="퀴즈 배경">
-              </ImageContent>
-            </ImageWrapper>
-            <ButtonTitleWrapper>
-              문제 수
-              <ButtonWrapper>
-                <CountButton title={5} nowCount={quizCount} onClick={() => setQuizCount(5)}/>
-                <CountButton title={10} nowCount={quizCount} onClick={() => setQuizCount(10)}/>
-                <CountButton title={15} nowCount={quizCount} onClick={() => setQuizCount(15)}/>
-              </ButtonWrapper>
-            </ButtonTitleWrapper>
+            <QuizGap>
+            <QuizContainer>    
+              <ImageWrapper>
+                <ImageContent src={bg} alt="퀴즈 배경">
+                </ImageContent>
+              </ImageWrapper>
+              <ButtonTitleWrapper>
+                문제 수
+                <ButtonWrapper>
+                  <CountButton title={5} nowCount={quizCount} onClick={() => setQuizCount(5)}/>
+                  <CountButton title={10} nowCount={quizCount} onClick={() => setQuizCount(10)}/>
+                  <CountButton title={15} nowCount={quizCount} onClick={() => setQuizCount(15)}/>
+                  <CountButton title={20} nowCount={quizCount} onClick={() => setQuizCount(20)}/>
+                  <CountButton title={30} nowCount={quizCount} onClick={() => setQuizCount(30)}/>
+                </ButtonWrapper>
+              </ButtonTitleWrapper>
+            </QuizContainer>
+            <Button text="시작하기" onClick={() => setNowQuiz(1)}/>
+            </QuizGap>
           </QuizSettingBarContainer>
         </QuizeSettingTitleWrapper>
       </QuizSettingWrapper>
@@ -73,6 +117,13 @@ const QuizSettingWrapper = styled.div`
   align-items: center;
 `;
 
+const QuizGap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px;
+`
+
 const QuizeSettingTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,12 +135,20 @@ const QuizSettingBarContainer = styled.div`
   height: 350px;
   width: 350px;
   border-radius: 8px;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
   background-color: #ffffff;
   box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.1);
+`
+
+const QuizContainer = styled.div`
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #5B61F7;
+  font-weight: 600;
 `
 
 const ImageWrapper = styled.div`
@@ -109,6 +168,9 @@ const ImageContent = styled.img`
 `;
 
 const ButtonTitleWrapper = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: space-between;
   display: flex;
   font-size: 14px;
   color: #6D6D6D;

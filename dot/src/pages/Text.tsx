@@ -69,6 +69,7 @@ const [error, setError] = useState(0);
 
   const handleSpeakText = () => {
     const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
     speechSynthesis.speak(utterance);
   };
 
