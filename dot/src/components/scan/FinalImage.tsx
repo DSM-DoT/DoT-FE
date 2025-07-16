@@ -144,7 +144,6 @@ const TextContent = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   background-color: #F6F6F6;
-  overflow-y: auto;
 `;
 
 const ContentWrapper = styled.div`
