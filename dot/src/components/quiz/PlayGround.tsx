@@ -138,7 +138,7 @@ export const PlayGround: React.FC<PlayGroundProps> = ({
               </QuizExplain>
             </QuizTextWrapper>
             <QuizCardWrapper>
-              <QuizCount>
+              <QuizCount $answer={answer} $quiz={quiz}>
                 {answerCount}번째 문제
               </QuizCount>
               <CardWrapper>
@@ -297,10 +297,16 @@ const Card = styled.div<{
   cursor: pointer;
 `
 
-const QuizCount = styled.div`
+const QuizCount = styled.div<{ $answer: number, $quiz: boolean }>`
   font-size: 20px;
   font-weight: 700;
-  color: #3E39EE;
+  color: ${({ $answer, $quiz }) =>
+    $answer === 0
+      ? '#3E39EE'
+      : $quiz
+        ? '#23EB00'
+        : '#FF3B30'
+  };
 `
 
 const QuizTitle = styled.div<{ $answer: number, $quiz: boolean }>`
