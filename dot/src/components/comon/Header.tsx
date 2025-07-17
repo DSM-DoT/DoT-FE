@@ -10,7 +10,7 @@ export const Header = () => {
   }
   return (
     <HeaderWrapper>
-      <img src={DoT} onClick={handleStart} style={{ cursor:'pointer'}} />
+      <img src={DoT} onClick={handleStart} style={{ cursor:'pointer'}}/>
       <MenuWrapper>
         <Menu href="/scan">스캔하기</Menu>
         <Menu href="/text">텍스트 변환</Menu>

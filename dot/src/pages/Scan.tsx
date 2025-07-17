@@ -290,7 +290,7 @@ const ImageContainer = styled.div<{$code: number}>`
   width: 200px;
   height: 200px;
   background-color: #d1d1d1;
-  border: ${(props) => (props.$code !== 0 ? "2px solid red" : "none")};
+  outline: ${(props) => (props.$code !== 0 ? "2px solid red" : "none")};
   border-radius: 8px;
   overflow: hidden;
 `;
