@@ -210,6 +210,9 @@ export const PlayGround: React.FC<PlayGroundProps> = ({
             </CardWrapper>
           </QuizCardWrapper>
         </QuizBarContent>
+        <Gap>
+          {"r"}
+        </Gap>
       </ButtonWrapper>
     </QuizWrapper>
   )
@@ -336,4 +339,14 @@ const QuizTextWrapper = styled.div`
   gap: 10px;
   font-size: 20px;
   font-weight: 700;
+`
+
+const Gap = styled.div`
+  padding: 10px 125px;
+  font-size: 14px;
+  font-weight: 500;  
+  border-radius: 8px;
+  color: #ffffff;
+  opacity: 1;
+  user-select: none;
 `

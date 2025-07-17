@@ -239,4 +239,5 @@ const ArrowText = styled.div`
   color: #6D6D6D;
   font-size: 14px;
   font-weight: 500;
+  
 `;
