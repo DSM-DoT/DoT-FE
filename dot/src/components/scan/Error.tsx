@@ -21,6 +21,8 @@ export const Error: React.FC<ErrorProps> = ({ code }) => {
 };
 
 const ErrorText = styled.div`
+  position: absolute;
+  margin-bottom: 230px;
   font-weight: 400;
   font-size: 12px;
   color:#FF3B30;
