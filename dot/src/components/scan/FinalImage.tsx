@@ -33,9 +33,15 @@ export const FinalImage: React.FC<FinalComponentProps> = ({ image, onReset, text
   };
 
   useEffect(() => {
-    setText(textLoad);
-    setBraille(convertToBraille(textLoad));
+    const filteredText = textLoad
+      .split("")
+      .filter((char) => brailleMap.hasOwnProperty(char.toLowerCase()))
+      .join("");
+    
+    setText(filteredText);
+    setBraille(convertToBraille(filteredText));
   }, [textLoad]);
+
 
   const handleSpeakText = () => {
     const utterance = new SpeechSynthesisUtterance(text);
